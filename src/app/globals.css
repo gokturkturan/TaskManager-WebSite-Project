@@ -2,26 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+input {
+  height: 45px !important;
+  border: 1px solid #c3c3c3 !important;
+  padding: 0 10px !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+input:focus {
+  outline: none !important;
+  border: 1px solid #585858 !important;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+button {
+  border: none !important;
+  outline: none !important;
+  cursor: pointer !important;
+  height: 45px !important;
+}
+
+.btn-primary {
+  background-color: #1a202c !important;
+  color: white !important;
+}
+
+.btn-disabled {
+  background-color: #c3c3c3 !important;
+  color: white !important;
+  pointer-events: none !important;
 }
