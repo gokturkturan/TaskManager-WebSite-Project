@@ -74,9 +74,7 @@ const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
                 </div>
               </div>
             </div>
-            <div className="h-[85vh] mx-10 mt-5 p-2 border border-gray-300 rounded-lg">
-              {children}
-            </div>
+            <div className="h-[85vh] mx-10 mt-5">{children}</div>
           </>
         )}
       </body>

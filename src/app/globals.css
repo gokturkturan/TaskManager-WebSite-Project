@@ -2,15 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-input {
-  height: 45px !important;
+input,
+select,
+textarea {
+  min-height: 45px !important;
   border: 1px solid #c3c3c3 !important;
   padding: 0 10px !important;
 }
 
-input:focus {
+input:focus,
+select:focus,
+textarea:focus {
   outline: none !important;
   border: 1px solid #585858 !important;
+}
+
+textarea {
+  min-height: 100px !important;
+  padding: 10px !important;
 }
 
 button {
@@ -18,6 +27,13 @@ button {
   outline: none !important;
   cursor: pointer !important;
   height: 45px !important;
+  padding: 0 20px !important;
+}
+
+.btn-outlined {
+  background-color: white !important;
+  color: #1a202c !important;
+  border: 1px solid #1a202c !important;
 }
 
 .btn-primary {
