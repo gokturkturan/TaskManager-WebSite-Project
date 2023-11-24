@@ -1,26 +1,43 @@
-import { useRouter } from "next/navigation";
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { taskInterface } from "@/interfaces";
-import { cookies } from "next/headers";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { SetLoading } from "@/redux/loadersSlice";
 
-const getTasks = async () => {
-  try {
-    const cookieStore = cookies();
-    const token = cookieStore.get("token")?.value;
-    const endPoint = `${process.env.DOMAIN}/api/tasks`;
-    const response = await axios.get(endPoint, {
-      headers: { Cookie: `token=${token}` },
-    });
-    return response.data.data;
-  } catch (error) {
-    return [];
-  }
-};
+const Tasks = () => {
+  const navigate = useRouter();
+  const dispatch = useDispatch();
 
-const Tasks = async () => {
-  const tasks = await getTasks();
+  const [tasks, setTasks] = useState<taskInterface[] | undefined>();
+
+  const getTasks = async () => {
+    try {
+      const response = await axios.get("/api/tasks");
+      setTasks(response.data.data);
+    } catch (error) {
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    getTasks();
+  }, [tasks]);
+
+  const onDelete = async (task: taskInterface) => {
+    try {
+      dispatch(SetLoading(true));
+      await axios.delete(`/api/tasks/${task._id}`);
+      toast.success("Task deleted successfully");
+    } catch (error: any) {
+      toast.error(error.message || error.response.data.message);
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
 
   const getProperty = (key: string, value: any) => (
     <div className="flex flex-col text-sm">
@@ -28,16 +45,20 @@ const Tasks = async () => {
       <span className="text-gray-600">{value}</span>
     </div>
   );
+
   return (
     <div>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Tasks</h1>
-        <button className="btn-primary rounded-md">
-          <Link href={"/tasks/addTask"}>New Task</Link>
+        <button
+          className="btn-primary rounded-md"
+          onClick={() => navigate.push("/tasks/addtask")}
+        >
+          New Task
         </button>
       </div>
       <div className="flex flex-col gap-5 mt-5">
-        {tasks.map((task: taskInterface) => (
+        {tasks?.map((task: taskInterface) => (
           <div
             key={task._id}
             className="p-5 border border-gray-300 rounded-md shadow-md flex flex-col gap-2"
@@ -54,7 +75,6 @@ const Tasks = async () => {
               {getProperty("Date to Finish", task.dateToFinish)}
               {getProperty("Reference", task.reference)}
               {getProperty("Priority", task.priority)}
-
               {getProperty(
                 "Created At",
                 new Date(task.createdAt || "").toLocaleDateString()
@@ -66,8 +86,13 @@ const Tasks = async () => {
             </div>
 
             <div className="flex justify-end gap-3">
-              <button className="btn-outlined">Delete</button>
-              <button className="btn-primary">
+              <button
+                className="btn-outlined rounded-md"
+                onClick={() => onDelete(task)}
+              >
+                Delete
+              </button>
+              <button className="btn-primary rounded-md">
                 <Link href={`/tasks/edittask?taskId=${task._id}`}>Edit</Link>
               </button>
             </div>

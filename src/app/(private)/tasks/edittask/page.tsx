@@ -2,21 +2,59 @@
 import TaskForm from "@/components/TaskForm";
 import { taskInterface } from "@/interfaces";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { SetLoading } from "@/redux/loadersSlice";
 
 const EditTask = () => {
+  const dispatch = useDispatch();
   const navigate = useRouter();
+  const searchParams = useSearchParams();
+  const taskId = searchParams.get("taskId");
 
   const [task, setTask] = useState<taskInterface>({
     title: "",
     description: "",
-    status: "OPEN",
-    category: "PERSONAL",
-    priority: "LOW",
+    status: "Open",
+    category: "Personal",
+    priority: "Low",
     dateToStart: "",
     dateToFinish: "",
     reference: "",
   });
+
+  const onSave = async () => {
+    try {
+      dispatch(SetLoading(true));
+      await axios.put(`/api/tasks/${taskId}`, task);
+      toast.success("Task updated successfully");
+      navigate.push("/tasks");
+    } catch (error: any) {
+      toast.error(error.message || error.response.data.message);
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
+
+  const getTask = async () => {
+    try {
+      dispatch(SetLoading(true));
+      const response = await axios.get(`/api/tasks/${taskId}`);
+      console.log(response.data.data);
+      setTask(response.data.data);
+    } catch (error: any) {
+      toast.error(error.response.data.message || error.message);
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
+
+  useEffect(() => {
+    getTask();
+  }, [taskId]);
 
   return (
     <div>
@@ -29,7 +67,7 @@ const EditTask = () => {
           Back
         </button>
       </div>
-      <TaskForm task={task} setTask={setTask} />
+      <TaskForm task={task} setTask={setTask} onSave={onSave} />
     </div>
   );
 };
