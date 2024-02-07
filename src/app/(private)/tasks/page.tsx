@@ -3,20 +3,21 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { taskInterface } from "@/interfaces";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { SetLoading } from "@/redux/loadersSlice";
 
-const Tasks = () => {
+const Tasks = ({ searchParams }: { searchParams: any }) => {
   const navigate = useRouter();
   const dispatch = useDispatch();
 
   const [tasks, setTasks] = useState<taskInterface[] | undefined>();
 
-  const getTasks = async () => {
+  const getTasks = async (searchParams = {}) => {
     try {
-      const response = await axios.get("/api/tasks");
+      const searchParamsString = new URLSearchParams(searchParams).toString();
+      const response = await axios.get(`/api/tasks` + "?" + searchParamsString);
       setTasks(response.data.data);
     } catch (error) {
       return [];
@@ -24,8 +25,9 @@ const Tasks = () => {
   };
 
   useEffect(() => {
-    getTasks();
-  }, [tasks]);
+    console.log(searchParams);
+    getTasks(searchParams);
+  }, []);
 
   const onDelete = async (task: taskInterface) => {
     try {
@@ -39,6 +41,11 @@ const Tasks = () => {
     }
   };
 
+  const clearFilter = async () => {
+    navigate.push("/tasks");
+    await getTasks();
+  };
+
   const getProperty = (key: string, value: any) => (
     <div className="flex flex-col text-sm">
       <span className="text-gray-700 font-semibold">{key}</span>
@@ -48,14 +55,27 @@ const Tasks = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Tasks</h1>
-        <button
-          className="btn-primary rounded-md"
-          onClick={() => navigate.push("/tasks/addtask")}
-        >
-          New Task
-        </button>
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold">
+          {(searchParams.status || searchParams.priority) && tasks?.length}{" "}
+          Tasks
+        </h1>
+        <div>
+          {(searchParams.status || searchParams.priority) && (
+            <button
+              className="btn-primary rounded-md mr-2"
+              onClick={clearFilter}
+            >
+              Clear Filter
+            </button>
+          )}
+          <button
+            className="btn-primary rounded-md"
+            onClick={() => navigate.push("/tasks/addtask")}
+          >
+            New Task
+          </button>
+        </div>
       </div>
       <div className="flex flex-col gap-5 mt-5">
         {tasks?.map((task: taskInterface) => (

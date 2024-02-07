@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import Spinner from "./Spinner";
 import { SetLoading } from "@/redux/loadersSlice";
 import { useRouter } from "next/navigation";
+import Router from "next/router";
 
 const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
   const { currentUser } = useSelector((state: any) => state.users);
@@ -64,7 +65,12 @@ const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
         ) : (
           <>
             <div className="mx-10 bg-primary text-white p-5 flex justify-between items-center rounded-b-lg">
-              <h1 className="text-2xl font-bold">Task Manager</h1>
+              <h1
+                className="text-2xl font-bold cursor-pointer"
+                onClick={() => navigate.push("/")}
+              >
+                Task Manager
+              </h1>
               <div className="flex gap-5">
                 <h1 className="underline cursor-pointer">
                   {currentUser?.username}

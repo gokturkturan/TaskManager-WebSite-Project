@@ -23,7 +23,14 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const userId = await validateJWTGetUserId(request);
-    const tasks = await Task.find({ user: userId }).sort({ createdAt: -1 });
+    const searchParams = new URL(request.nextUrl).searchParams;
+    const status = searchParams.get("status");
+    const priority = searchParams.get("priority");
+    const tasks = await Task.find({
+      user: userId,
+      ...(status && { status }),
+      ...(priority && { priority }),
+    }).sort({ createdAt: -1 });
     return NextResponse.json({ data: tasks }, { status: 200 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
