@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TaskManager Website Project
 
-## Getting Started
+> Task planning platform built with the Next.js
 
-First, run the development server:
+<!-- toc -->
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+  * [Features](#features)
+  * [Technologies](#technologies)
+  * [Photos](#photos)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<!-- tocstop -->
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
+- Creating and Editing Task
+- Filtering Tasks
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Technologies
+- Next.js
+- Redux Toolkit
+- MongoDB
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Photos
+![anasayfa](https://github.com/gokturkturan/TaskManager-WebSite-Project/assets/113911139/5dcc3745-a0b7-462c-af48-3bce1e1d5f39)
+![creating-task](https://github.com/gokturkturan/TaskManager-WebSite-Project/assets/113911139/3f5e9c78-261a-4a24-827c-4de09612d8d8)
+![editing-task](https://github.com/gokturkturan/TaskManager-WebSite-Project/assets/113911139/bb22ae9f-8e5f-4782-965f-042b13b21b52)
+![all-tasks](https://github.com/gokturkturan/TaskManager-WebSite-Project/assets/113911139/72bf6f3b-c749-4016-a13a-d3d089989acc)
+![filter-task](https://github.com/gokturkturan/TaskManager-WebSite-Project/assets/113911139/ca64b057-bc00-4e6a-ab09-1873f49f0d60)
