@@ -77,6 +77,10 @@ const Tasks = ({ searchParams }: { searchParams: any }) => {
           </button>
         </div>
       </div>
+      <div>{searchParams.status ? "Status: " + searchParams.status : null}</div>
+      <div>
+        {searchParams.priority ? "Priority: " + searchParams.priority : null}
+      </div>
       <div className="flex flex-col gap-5 mt-5">
         {tasks?.map((task: taskInterface) => (
           <div
@@ -85,10 +89,8 @@ const Tasks = ({ searchParams }: { searchParams: any }) => {
           >
             <h1 className="text-xl text-gray-700">{task.title}</h1>
             <p className="text-gray-600 text-sm">{task.description}</p>
-
             <hr />
-
-            <div className="grid grid-cols-3 gap-5">
+            <div className="grid grid-cols-2 lg:grid-cols-3  gap-5">
               {getProperty("Status", task.status)}
               {getProperty("Category", task.category)}
               {getProperty("Date to Start", task.dateToStart)}

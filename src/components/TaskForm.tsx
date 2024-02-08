@@ -51,7 +51,7 @@ const TaskForm = ({
         />
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col lg:col-span-1 col-span-3">
         <label htmlFor="status">Status</label>
         <select
           value={task.status}
@@ -63,7 +63,7 @@ const TaskForm = ({
         </select>
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col lg:col-span-1 col-span-3">
         <label htmlFor="category">Category</label>
         <select
           value={task.category}
@@ -76,7 +76,7 @@ const TaskForm = ({
         </select>
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col lg:col-span-1 col-span-3">
         <label htmlFor="priority">Priority</label>
         <select
           value={task.priority}
@@ -88,7 +88,7 @@ const TaskForm = ({
         </select>
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col lg:col-span-1 col-span-3">
         <label htmlFor="dateToStart">Date to Start</label>
         <input
           type="date"
@@ -97,7 +97,7 @@ const TaskForm = ({
         />
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col lg:col-span-1 col-span-3">
         <label htmlFor="dateToFinish">Date to Finish</label>
         <input
           type="date"
